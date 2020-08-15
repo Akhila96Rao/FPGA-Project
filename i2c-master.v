@@ -4,19 +4,14 @@
 // Engineer: AKHILA K
 // 
 // Create Date:    15:36:04 08/15/2020 
-// Design Name: I2C Master
-// Module Name:    i2c-master 
-// Project Name: I2C protocol
+// Design Name: 	I2C Master
+// Module Name:   i2c-master 
+// Project Name: 	I2C protocol
 // Target Devices: Spartan 6 Evaluation Board
-// Tool versions: 
-// Description: 
-//
-// Dependencies: 
-//
-// Revision: 0.02
-// Revision 0.01 - File Created
-// Additional Comments: 
-//
+// Major Revision
+// User		Date			Description
+//	Akhila	15/8/20		Initial Code
+// Akhila	15/8/20		Correction for SDA
 //////////////////////////////////////////////////////////////////////////////////
 module i2c_master(clk, reset, addr, data_wr, data_rd, rw,scl,sda,busy,state,count);
 	 						
@@ -25,7 +20,7 @@ module i2c_master(clk, reset, addr, data_wr, data_rd, rw,scl,sda,busy,state,coun
 	input [7:0]data_wr, data_rd;	
 	output reg busy;					
 	output reg scl, sda;					
-	output reg [2:0]count;					
+	output reg [3:0]count;					
 						
 	output reg [5:0]state;					
 	localparam START = 0;					
@@ -49,7 +44,7 @@ module i2c_master(clk, reset, addr, data_wr, data_rd, rw,scl,sda,busy,state,coun
 		scl <= 1;				
 		sda <= 1;				
 		busy <= 0;				
-		count <= 7;				
+		count <= 8;				
 		state <= START;				
 		end				
 		else				
@@ -57,7 +52,7 @@ module i2c_master(clk, reset, addr, data_wr, data_rd, rw,scl,sda,busy,state,coun
 		START:begin				
 				busy = 1;		
 				sda <= 0;		
-				count <= 7;		
+				count <= 8;		
 				state = WRITE;		
 				end		
 		WRITE:begin				
@@ -70,7 +65,7 @@ module i2c_master(clk, reset, addr, data_wr, data_rd, rw,scl,sda,busy,state,coun
 				state <= ACK;		
 				end		
 		WRITE_DATA: begin				
-						sda <= data_wr[count];
+						sda <= data_wr[count-1];
 						scl<=1;
 						count <= count - 1;
 						state <= WRITE;
