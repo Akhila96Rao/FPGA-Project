@@ -84,11 +84,11 @@ module i2c_master_tb;
 	reset = 0;
 	rw=1;
 	
-	#7200; //Actual = current + Previous
-	data_wr = 8'b11001100; 
+	//#7200; //Actual = current + Previous
+	//data_wr = 8'b11001100; 
 	
-	#7600;
-	data_wr = 8'b11110000;
+	//#7600;
+	//data_wr = 8'b11110000;
 		
 	end
 	     
