@@ -42,43 +42,47 @@ module i2c_master(clk, reset, addr, data_wr, data_rd, rw,scl,sda,busy,state,coun
 		else counter2 <= counter2 + 1;
 	end 
 	
-	always @ (negedge i2c_clk, posedge reset)					
+	always @ (negedge i2c_clk, posedge reset) //Cannot use state, count				
 	begin					
 		if (reset == 1)				
 		begin				
 		scl <= 1;				
 		sda <= 1;				
 		busy <= 0;				
-		count <= 8;				
+		count <= 9;				
 		state <= START;				
 		end				
 		else				
 		case (state)				
 		START:begin				
 				busy = 1;		
-				sda <= 0;
+				sda <= 0; //Start Bit
 				scl <= 1;				
-				count <= 8;		
+				count <= 9;		
 				state = WRITE;		
 				end		
 		WRITE:begin				
 				if (count>0) //>=0 will cause Count to reset to 7		
 				begin		
-				scl <= i2c_clk;		
+				//scl <= i2c_clk;	//Cannot use ~i2c_clk
+				scl <= 1;
 				state <= WRITE_DATA;		
 				end		
 				else		
 				state <= ACK;		
 				end		
 		WRITE_DATA: begin				
-						sda <= data_wr[count-1];
-						scl <= 1;
+						if (count == 9)
+							sda <= 0; //Start Bit
+						else
+							sda <= data_wr[count-1];
+						scl <= 0;
 						count <= count - 1;
 						state <= WRITE;
 						end
 		ACK:begin				
-			 scl <= 1;			
-			 sda <= 1;			
+			 scl <= 1;						
+			 sda <= 1; //Stop Bit		
 			 busy <= 0;			
 			 state <= START;			
 			 end			
