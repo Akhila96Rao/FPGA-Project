@@ -10,7 +10,7 @@
 // Target Devices: Spartan 6 Evaluation Board
 // Major Revision
 // User		Date			Description
-//	Akhila	15/8/20		Initial Code
+// Akhila	15/8/20		Initial Code
 // Akhila	15/8/20		Correction for SDA
 // Akhila   15/8/20		Add slower clock
 //////////////////////////////////////////////////////////////////////////////////
@@ -69,8 +69,7 @@ module i2c_master(clk, reset, addr, data_wr, data_rd, rw,scl,sda,busy,state,coun
 					begin		
 					scl <= 1;
 					state <= WRITE_DATA;		
-					end
-					
+					end					
 				else
 					begin
 					scl <= 1;
@@ -78,21 +77,11 @@ module i2c_master(clk, reset, addr, data_wr, data_rd, rw,scl,sda,busy,state,coun
 					end
 				end		
 		WRITE_DATA: begin				
-						if (count == 9)
-							begin
-							sda <= 0; //Start Bit //This is adding one additional clock cycle
-							count <= count - 1;
-							state <= WRITE;	
-							end
-						else
-							begin
-							sda <= data_wr[count-1];
-							scl <= 0; 
-							count <= count - 1;
-							state <= WRITE;	
-							end
-				
-						end
+					sda <= data_wr[count-1];
+					scl <= 0; 
+					count <= count - 1;
+					state <= WRITE;					
+					end
 		ACK:begin				
 			 scl <= 0; 						
 			 state <= STOP;			
