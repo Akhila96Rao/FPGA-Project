@@ -77,7 +77,8 @@ module i2c_master_tb;
 	initial begin
 	//Value set 0-100ns
 	reset = 1;
-	data_wr = 8'b10101010;
+	//data_wr = 8'b10101010;
+	data_wr = 8'b10101011;
 	rw = 0;
 	#100; 
 	

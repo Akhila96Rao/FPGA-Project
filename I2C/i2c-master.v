@@ -83,11 +83,12 @@ module i2c_master(clk, reset, addr, data_wr, data_rd, rw,scl,sda,busy,state,coun
 					state <= WRITE;					
 					end
 		ACK:begin				
-			 scl <= 0; 						
+			 scl <= 0; 	
+			 sda <= 0; //ACK =0, NACK =1			 
 			 state <= STOP;			
 			 end	
 		STOP:begin
-			 scl <= 1; 							
+			 scl <= 1;
 			 state <= STOP2;	
 			 end
 		STOP2:begin
