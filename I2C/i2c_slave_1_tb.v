@@ -88,7 +88,12 @@ module i2c_slave_1_tb;
 	
 	
 	scl = 0;
-	#400; //Add another 100, 300ns also works
+	//#400; //Add another 100, 300ns also works
+	#200;
+	scl = 1;
+	#200;
+	
+	scl = 0;
 	sda = x[7];
 	#200;
 	scl = 1;
@@ -136,12 +141,17 @@ module i2c_slave_1_tb;
 	scl = 1;
 	#200; 
 	
-	//scl = 0; //No need to bring down the SCL to 0 again
+	scl = 0; 
+	sda = 0; // ACK Bit if 0 = ACK, 1 = NACK
+	#200;
+	scl = 1;
+	#200;
+
+	scl = 0; //No need to bring down the SCL to 0 again
 	sda = 1; // Stop Bit
 	#200;
-	//scl = 1;
-	//#200;
-	
+	scl = 1;
+	#200;	
 	end
 	
 endmodule
