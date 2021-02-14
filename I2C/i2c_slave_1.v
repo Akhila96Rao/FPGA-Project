@@ -27,12 +27,12 @@ module i2c_slave_1(clk, reset, addr, data_wr, data_rd, rw,scl,sda,busy,state,cou
 	output reg [7:0]data_rd;	
 	output reg busy;										
 	output reg [3:0]count;									
-	output reg [5:0]state;	
+	output reg [6:0]state;	
 	output reg i2c_clk;	
 	
 	localparam START = 0;					
 	localparam READ = 1;					
-	localparam READ_DATA = 2;					
+	localparam READ_DATA = 2;			
 	localparam ACK = 3;					
 	localparam DIVIDE_BY = 4;
 
@@ -57,7 +57,7 @@ module i2c_slave_1(clk, reset, addr, data_wr, data_rd, rw,scl,sda,busy,state,cou
 	begin					
 		if (reset == 1)				
 		begin							
-		count <= 8;	
+		count <= 8;	//To delay by 1 clock changing from 8 to 9
 		data_rd <= 0;	
 		busy <= 0;
 		state <= START;				
@@ -88,18 +88,22 @@ module i2c_slave_1(clk, reset, addr, data_wr, data_rd, rw,scl,sda,busy,state,cou
 //				else if (count == 0)	//to reset to initial state	
 //				state <= ACK;		
 				end		
-		READ_DATA: begin				
-						data_rd[count-1] <= sda;
-						count <= count - 1;
-						if (scl == 0) //Need to read new data when scl=0
-						state <= READ;
-						else if (count == 0)	//to reset to initial state	
-						state <= ACK;		
-						end
-		ACK:begin						
+		READ_DATA:begin				
+					data_rd[count-1] <= sda;
+					count <= count - 1;
+					if (scl == 0) //Need to read new data when scl=0
+					state <= READ;
+					else if (count == 0)	//to reset to initial state	
+					state <= ACK;		
+					end		
+		ACK:begin	 
 			 busy <= 0;
-			 state <= START;			
-			 end			
+			 //state <= START; //No need to go back to start			
+			 end
+		default:begin
+				busy <= 0;
+				end
+				
 		endcase				
 	end //end of always		
 endmodule

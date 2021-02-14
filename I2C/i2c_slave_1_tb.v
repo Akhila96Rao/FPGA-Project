@@ -41,7 +41,16 @@ module i2c_slave_1_tb;
 	wire i2c_clk;
 	wire busy;
 	
-	localparam x = 8'b10101010;
+	localparam x = 8'b10101010; // Data = aah
+	//localparam x = 8'b01010101; //Data = 55h
+	//localparam x = 8'b00010101; //Data = 15h
+	//localparam x = 8'b00001111; //Data = 0Fh
+	//localparam x = 8'b11110000; //Data = F0h
+	//localparam x = 8'b11111111; //Data = FFh
+	//localparam x = 8'b00000000; //Data = 00h
+	//localparam x = 8'b01110111; //Data = 77h
+	//localparam x = 8'b00110011; //Data = 33h
+	
 	integer i;
 
 	// Instantiate the Unit Under Test (UUT)
@@ -148,10 +157,10 @@ module i2c_slave_1_tb;
 	#200;
 
 	scl = 0; //No need to bring down the SCL to 0 again
-	sda = 1; // Stop Bit
 	#200;
 	scl = 1;
-	#200;	
+	#100;	
+	sda = 1; // Stop Bit
 	end
 	
 endmodule
