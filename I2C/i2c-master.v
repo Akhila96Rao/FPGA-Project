@@ -22,7 +22,7 @@ module i2c_master(clk, reset, addr, data_wr, data_rd, rw,scl,sda,busy,state,coun
 	output reg busy;					
 	output reg scl, sda;					
 	output reg [3:0]count;									
-	output reg [7:0]state;	
+	output reg [8:0]state;	
 	output reg i2c_clk;	
 	
 	localparam START = 0;					
@@ -32,6 +32,7 @@ module i2c_master(clk, reset, addr, data_wr, data_rd, rw,scl,sda,busy,state,coun
 	localparam STOP = 4;	
 	localparam STOP2 = 5;
 	localparam LAST = 6;
+	localparam LAST2 = 7;
 	localparam DIVIDE_BY = 4;
 
 	reg counter2 = 0;
@@ -93,13 +94,17 @@ module i2c_master(clk, reset, addr, data_wr, data_rd, rw,scl,sda,busy,state,coun
 			 end
 		STOP2:begin
 			 scl <= 0; 					
-			 sda <= 1; //Stop Bit		
+			 //sda <= 1; //Stop Bit		
 			 busy <= 0;			
 			 state <= LAST;
 			 end
 		LAST:begin
 			 scl <= 1;
+			 state <= LAST2;
 			 end
+		LAST2:begin
+			  sda <= 1; //Stop Bit		
+			  end
 		default:begin
 				scl<=1;
 				end

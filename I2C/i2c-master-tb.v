@@ -83,7 +83,7 @@ module i2c_master_tb;
 	#100; 
 	
 	reset = 0;
-	rw=1;
+	rw=0; //Enable Write
 	
 	//#7200; //Actual = current + Previous
 	//data_wr = 8'b11001100; 
