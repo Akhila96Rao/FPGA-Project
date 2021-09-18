@@ -17,6 +17,8 @@ module spi_master_tb;
 //Inputs
 reg clk;
 reg reset;
+reg polarity;
+reg phase;
 reg miso;
 reg [7:0]data_wr;
 
@@ -38,7 +40,9 @@ spi_master s1(
 .mosi(mosi),
 .data_wr(data_wr),
 .state(state),
-.count(count)
+.count(count),
+.polarity(polarity),
+.phase(phase)
 );
 
 initial begin
@@ -57,8 +61,9 @@ always begin
 initial begin
 	reset = 1;
 	data_wr = 8'b10101011;
-	#400; //Need to give atleast 1clock pulse time as the state gets assigned for posedge of spi_clk and not actual clock
-	
+	polarity = 0;
+	phase = 0;
+	#400; //Need to give atleast 1-clock pulse time as the state gets assigned for posedge of spi_clk and not actual clock
 	reset = 0;	
 	end
 
