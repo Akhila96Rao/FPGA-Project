@@ -28,6 +28,12 @@ module spi_master(clk, spi_clk, reset, cs, miso, mosi, data_wr, state, count);
 //transmission occur at the rate of spi_clk
 //Here only MOSI is handled as master is outputting the data
 
+/*
+Polarity = 0, Phase = 0
+Data is output on +ve edge of SPICLK 
+Input data is latched on falling edge of SPICLK
+*/
+
 //Define intermediate signals
 	localparam DIVIDE_BY = 4;
 	reg counter2 = 0;
@@ -39,7 +45,7 @@ module spi_master(clk, spi_clk, reset, cs, miso, mosi, data_wr, state, count);
 	localparam ACK = 3;
 
 //SPI clk	
-	initial spi_clk = 1;
+	initial spi_clk = 0;
 
 	always @(posedge clk) begin
 		if (counter2 == (DIVIDE_BY/2) - 1) begin
