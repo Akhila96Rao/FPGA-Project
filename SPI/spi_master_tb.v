@@ -62,7 +62,7 @@ initial begin
 	reset = 1;
 	data_wr = 8'b10101011;
 	polarity = 0;
-	phase = 0;
+	phase = 1;
 	#400; //Need to give atleast 1-clock pulse time as the state gets assigned for posedge of spi_clk and not actual clock
 	reset = 0;	
 	end
