@@ -25,6 +25,8 @@ wire spi_clk;
 wire cs;
 wire mosi;
 wire [3:0]state;
+wire [3:0]count;
+
 
 // Instantiate the Unit Under Test (UUT)
 spi_master s1(
@@ -35,7 +37,8 @@ spi_master s1(
 .miso(miso),
 .mosi(mosi),
 .data_wr(data_wr),
-.state(state)
+.state(state),
+.count(count)
 );
 
 initial begin
