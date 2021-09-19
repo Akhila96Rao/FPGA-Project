@@ -55,7 +55,7 @@ module spi_master(clk, spi_clk, reset, cs, miso, mosi, data_wr, state, count, po
 
 	always @(polarity,phase)
 	begin
-	spi_mode = polarity | phase ;
+	spi_mode = {polarity,phase} ;
 	end
 	
 //SPI clk	

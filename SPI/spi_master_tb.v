@@ -46,11 +46,20 @@ spi_master s1(
 );
 
 initial begin
-	//Initialise inputs
 	clk = 0;
 	reset = 1;
-	data_wr = 0;
-	#100; //Wait for 100ns for global reset to finish
+	data_wr = 8'b10101011;
+	polarity = 0;
+	phase = 0;
+	#400;
+	reset = 0;
+	#5400;
+	reset = 1;
+	polarity = 0;
+	phase = 1;
+	#5800;
+	reset=0;
+
 	end
 
 always begin
@@ -58,13 +67,6 @@ always begin
 	#50;
 	end
 
-initial begin
-	reset = 1;
-	data_wr = 8'b10101011;
-	polarity = 0;
-	phase = 1;
-	#400; //Need to give atleast 1-clock pulse time as the state gets assigned for posedge of spi_clk and not actual clock
-	reset = 0;	
-	end
+
 
 endmodule
