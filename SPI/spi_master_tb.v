@@ -53,14 +53,26 @@ initial begin
 	phase = 0;
 	#400;
 	reset = 0;
-	#4100; //Change to 5500 and see, original was 5400
-	// 5500 + 400 = 5900 it will change, 
+	#4100; 
 	reset = 1;
 	polarity = 0;
 	phase = 1;
 	#400;
-	reset=0;
-
+	reset = 0;
+	#4100;
+	reset = 1;
+	polarity = 1;
+	phase = 0;
+	#400;
+	reset = 0;
+	#4100;
+	reset = 1;
+	polarity = 1;
+	phase = 1;
+	#400;
+	reset = 0;
+	#4100;
+	reset = 1;
 	end
 
 always begin

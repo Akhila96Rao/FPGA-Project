@@ -66,7 +66,7 @@ cs = 1;
 mosi = 1;
 spi_clk = 0;
 state = 4'd0;
-miso = 0;
+//miso = 0;
 end
 
 //SPI clk	
