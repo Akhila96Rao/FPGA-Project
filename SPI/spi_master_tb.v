@@ -48,7 +48,8 @@ spi_master s1(
 initial begin
 	clk = 0;
 	reset = 1;
-	data_wr = 8'b10101011;
+	//data_wr = 8'b10101011;
+	data_wr = 8'b10101111;
 	polarity = 0;
 	phase = 0;
 	#400;
@@ -79,7 +80,5 @@ always begin
 	clk = ~clk;
 	#50;
 	end
-
-
 
 endmodule

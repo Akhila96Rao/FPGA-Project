@@ -26,6 +26,8 @@
 // User		Date			Description
 // Akhila	06/30/21		Initial Code
 // Akhila	12/26/21		Corrections for spi_clk behavior
+// Akhila	12/26/21		Corrections for CS signal
+
 
 //////////////////////////////////////////////////////////////////////////////////
 module spi_master(clk, spi_clk, reset, cs, miso, mosi, data_wr, state, count, polarity, phase);
@@ -68,20 +70,6 @@ spi_clk = 0;
 state = 4'd0;
 //miso = 0;
 end
-
-//SPI clk	
-//	always@(reset, spi_mode)
-//	begin
-////	if (reset == 1'b1)       
-////	begin
-//	case(spi_mode)
-//	2'b00: spi_clk = 0;
-//	2'b01: spi_clk = 0;
-//	2'b10: spi_clk = 1;
-//	2'b11: spi_clk = 1;
-//	endcase
-////	end
-//	end
 
 	always @(posedge reset, posedge clk) 
 	begin
@@ -127,30 +115,22 @@ end
 	begin
 	if (spi_mode == 2'b00 || spi_mode == 2'b10)
 	begin
-	if (reset == 1)
-	begin
-//	cs <= 1;
-//	count <= 8;
-//	mosi <= 1;
-//	state <= START_A;
-	end
-	else
 	case(state)
 	START_A:begin
-	cs <=0 ;
+	cs <= 0 ;
 	count <= 8;
+	mosi <= data_wr[count-1];
+	count <= count - 1;
 	state <= WRITE_A;
 	end
 	WRITE_A:begin	
-	if (count>0) begin		
-	if (count == 4'd1)begin
-	cs <= 1;
-	end
+	if (count > 0) begin	
 	mosi <= data_wr[count-1];
 	count <= count - 1;
 	end		
 	else begin
-	state <= ACK_A;	
+	cs <= 1;	
+	//state <= ACK_A;	
 	end		
 	end
 	ACK_A:begin 
@@ -168,30 +148,22 @@ end
 	begin
 	if (spi_mode == 2'b01 || spi_mode == 2'b11)
 	begin
-	if (reset == 1)
-	begin
-//	cs <= 1;
-//	count <= 8;
-//	mosi <= 1;
-//	state <= START_B;
-	end
-	else
 	case(state)
 	START_B:begin
-	cs <=0 ;
+	cs <= 0;
 	count <= 8;
+	mosi <= data_wr[count-1];
+	count <= count - 1;
 	state <= WRITE_B;
 	end
 	WRITE_B:begin	
-	if (count>0) begin		
-	if (count == 4'd1)begin
-	cs <= 1;
-	end
+	if (count > 0) begin		
 	mosi <= data_wr[count-1];
 	count <= count - 1;
 	end		
 	else begin
-	state <= ACK_B;	
+	cs <= 1;	
+	//state <= ACK_B;	
 	end		
 	end
 	ACK_B:begin 
