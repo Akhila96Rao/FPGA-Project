@@ -79,21 +79,25 @@ end
 		2'b00: begin
 				spi_clk <= 0;
 				count <= 8;
+				cs <= 1;
 				state <= START_A;
 				end
 		2'b01: begin
 				spi_clk <= 0;
 				count <= 8;
+				cs <= 1;
 				state <= START_B;
 				end
 		2'b10: begin
 				spi_clk <= 1;
 				count <= 8;
+				cs <= 1;
 				state <= START_A;
 				end
 		2'b11: begin
 				spi_clk <= 1;
 				count <= 8;
+				cs <= 1;
 				state <= START_B;
 				end
 		endcase
@@ -110,7 +114,7 @@ end
 	end
 	end 
 
-//Rising case : Polarity, Phase = 00,10, //Falling case : Polarity, Phase = 01,11
+//Rising case : Polarity, Phase = 00,10
 	always @ (posedge spi_clk)
 	begin
 	if (spi_mode == 2'b00 || spi_mode == 2'b10)
