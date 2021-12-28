@@ -109,7 +109,7 @@ initial begin
 	miso = x[1];
 	#400;
 	miso = x[0];
-	#400;
+	#500;
 
 	// Case - 3 : Polarity = 1, Phase = 0
 	reset = 1;
@@ -132,7 +132,7 @@ initial begin
 	miso = x[1];
 	#400;
 	miso = x[0];
-	#400;
+	#500;
 
 	// Case - 4 : Polarity = 1, Phase = 1
 	reset = 1;
