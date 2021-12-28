@@ -3,9 +3,9 @@
 // Company: FPGA PROJECT
 // Engineer: AKHILA K
 // 
-// Create Date:		06/30/2021 
+// Create Date:	06/30/2021 
 // Design Name: 	SPI Master
-// Module Name:		spi-master 
+// Module Name:	spi-master 
 // Project Name: 	SPI protocol
 // Target Devices: Spartan 6 Evaluation Board
 // Description : 
@@ -121,11 +121,13 @@ end
 	begin
 	case(state)
 	START_A:begin
+	if (reset == 0) begin
 	cs <= 0 ;
 	count <= 8;
 	mosi <= data_wr[count-1];
 	count <= count - 1;
 	state <= WRITE_A;
+	end
 	end
 	WRITE_A:begin	
 	if (count > 0) begin	
@@ -134,11 +136,7 @@ end
 	end		
 	else begin
 	cs <= 1;	
-	//state <= ACK_A;	
 	end		
-	end
-	ACK_A:begin 
-	cs <= 1;		
 	end
 	default:begin
 	cs <= 1;
@@ -154,11 +152,13 @@ end
 	begin
 	case(state)
 	START_B:begin
+	if (reset == 0) begin
 	cs <= 0;
 	count <= 8;
 	mosi <= data_wr[count-1];
 	count <= count - 1;
 	state <= WRITE_B;
+	end
 	end
 	WRITE_B:begin	
 	if (count > 0) begin		
@@ -167,11 +167,7 @@ end
 	end		
 	else begin
 	cs <= 1;	
-	//state <= ACK_B;	
 	end		
-	end
-	ACK_B:begin 
-	cs <= 1;		
 	end
 	default:begin
 	cs <= 1;
