@@ -1,25 +1,24 @@
 `timescale 1ns / 1ps
 
 ////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer:
+// Company:	FPGA PROJECT
+// Engineer:	AKHILA K
 //
 // Create Date:   22:24:22 12/27/2021
 // Design Name:   spi_slave
 // Module Name:   F:/FPGA-2020/SPI/SPI_PROTOCOL_1/spi_slave_tb.v
 // Project Name:  SPI_PROTOCOL_1
-// Target Device:  
-// Tool versions:  
+// Target Devices:	Spartan 6 Evaluation Board
 // Description: 
 //
 // Verilog Test Fixture created by ISE for module: spi_slave
 //
 // Dependencies:
 // 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
+// Major Revision
+// User		Date			Description
+// Akhila	12/27/21		Initial Code
+//
 ////////////////////////////////////////////////////////////////////////////////
 
 module spi_slave_tb;
@@ -61,8 +60,10 @@ module spi_slave_tb;
 	initial begin
 	clk = 0;
 	reset = 1;
-	polarity = 1;
-	phase = 1;
+	
+	//Case - 1 : Polarity = 0, Phase = 0
+	polarity = 0;
+	phase = 0;
 	miso = 0;
 	#400;
 	reset = 0;
@@ -82,6 +83,77 @@ module spi_slave_tb;
 	#400;
 	miso = x[0];
 	#400;
+	
+	// Case - 2 : Polarity = 0, Phase = 1
+	reset = 1;
+	polarity = 0;
+	phase = 1;
+	#400;
+	reset = 0;
+	miso = x[7];
+	#400;
+	miso = x[6];
+	#400;
+	miso = x[5];
+	#400;
+	miso = x[4];
+	#400;
+	miso = x[3];
+	#400;
+	miso = x[2];
+	#400;
+	miso = x[1];
+	#400;
+	miso = x[0];
+	#400;
+	
+	// Case - 3 : Polarity = 1, Phase = 0
+	reset = 1;
+	polarity = 1;
+	phase = 0;
+	#400;
+	reset = 0;
+	miso = x[7];
+	#400;
+	miso = x[6];
+	#400;
+	miso = x[5];
+	#400;
+	miso = x[4];
+	#400;
+	miso = x[3];
+	#400;
+	miso = x[2];
+	#400;
+	miso = x[1];
+	#400;
+	miso = x[0];
+	#400;
+	
+	// Case - 4 : Polarity = 1, Phase = 1
+	reset = 1;
+	polarity = 1;
+	phase = 1;
+	#400;
+	reset = 0;
+	miso = x[7];
+	#400;
+	miso = x[6];
+	#400;
+	miso = x[5];
+	#400;
+	miso = x[4];
+	#400;
+	miso = x[3];
+	#400;
+	miso = x[2];
+	#400;
+	miso = x[1];
+	#400;
+	miso = x[0];
+	#400;
+	
+	reset = 1;
 	
 	end
 	

@@ -1,21 +1,32 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company:	FPGA PROJECT
+// Engineer:	AKHILA K
 // 
 // Create Date:    22:09:08 12/27/2021 
-// Design Name: 
+// Design Name:	 SPI slave
 // Module Name:    spi_slave 
-// Project Name: 
-// Target Devices: 
-// Tool versions: 
+// Project Name:	 SPI Protocol
+// Target Devices:	Spartan 6 Evaluation Board
 // Description: 
+// when cs change from 1 to 0, indicates transmission to begin
+// By default, miso and mosi are in High impedance state ==> Pull up
+// spi_clk is derived from clk 
+// spi_clk is slower than clk 
+// transmission occur at the rate of spi_clk
+// Here only MISO is handled as master is inputting/getting the data from slave
+// The data is read on to the signal data_rd where it is accumulated at the end 
+// of 8 clock cycles. During this period CS will be low/0
 //
-// Dependencies: 
+// Polarity		Phase		SPICLK_IDLE_state		MOSI(Data Output)		MISO(Input Data)
+// 0				0			0							Rising					Falling
+// 0				1			0							Falling					Rising
+// 1				0			1							Rising					Falling
+// 1				1			1							Falling					Rising
 //
-// Revision: 
-// Revision 0.01 - File Created
-// Additional Comments: 
+// Major Revision
+// User		Date			Description
+// Akhila	12/27/21		Initial Code
 //
 //////////////////////////////////////////////////////////////////////////////////
 module spi_slave(clk, spi_clk, reset, cs, miso, mosi, data_wr, data_rd, state, count, polarity, phase);
@@ -69,24 +80,28 @@ end
 				spi_clk <= 0;
 				count <= 8;
 				cs <= 1;
+				data_rd <= 8'bxxxxxxxx;
 				state <= START_A;
 				end
 		2'b01: begin
 				spi_clk <= 0;
 				count <= 8;
 				cs <= 1;
+				data_rd <= 8'bxxxxxxxx;
 				state <= START_B;
 				end
 		2'b10: begin
 				spi_clk <= 1;
 				count <= 8;
 				cs <= 1;
+				data_rd <= 8'bxxxxxxxx;
 				state <= START_A;
 				end
 		2'b11: begin
 				spi_clk <= 1;
 				count <= 8;
 				cs <= 1;
+				data_rd <= 8'bxxxxxxxx;
 				state <= START_B;
 				end
 		endcase
